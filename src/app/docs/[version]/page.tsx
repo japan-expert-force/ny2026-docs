@@ -1,6 +1,7 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Tag } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CodeDisplay } from "@/components/ui/code-display";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -28,7 +29,7 @@ export default async function UpdateDetailPage({ params }: PageProps) {
 
   return (
     <ScrollArea className="h-full">
-      <div className="container mx-auto max-w-4xl space-y-8 py-12">
+      <div className="container mx-auto max-w-4xl space-y-8 py-8">
         {/* Header */}
         <div className="space-y-4">
           <Link href="/docs">
@@ -38,14 +39,17 @@ export default async function UpdateDetailPage({ params }: PageProps) {
             </Button>
           </Link>
 
-          <div className="space-y-2">
+          <div className="space-y-2 mt-4">
             <div className="flex items-center gap-3">
               <h1 className="text-4xl font-bold">{update.title}</h1>
-              <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
-                {update.version}
-              </span>
             </div>
-            <p className="text-muted-foreground">{update.date}</p>
+            <div className="flex space-x-2">
+              <p className="text-muted-foreground">{update.date}</p>
+              <Badge variant="primary" appearance="ghost" className="text-sm">
+                <Tag />
+                {update.version}
+              </Badge>
+            </div>
           </div>
         </div>
 
