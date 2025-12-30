@@ -8,15 +8,27 @@ interface MermaidProps {
   chart: string;
   className?: string;
   id?: string;
+  align?: "left" | "center" | "right";
 }
 
 // Mermaid の初期化を一度だけ実行
 let mermaidInitialized = false;
 
-export function Mermaid({ chart, className, id }: MermaidProps) {
+export function Mermaid({
+  chart,
+  className,
+  id,
+  align = "center",
+}: MermaidProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+
+  const alignmentClasses = {
+    left: "flex justify-start",
+    center: "flex justify-center",
+    right: "flex justify-end",
+  };
 
   useEffect(() => {
     // Mermaid の初期化
@@ -58,6 +70,12 @@ export function Mermaid({ chart, className, id }: MermaidProps) {
     renderChart();
   }, [chart, id]);
 
+  useEffect(() => {
+    if (containerRef.current && svg) {
+      containerRef.current.innerHTML = svg;
+    }
+  }, [svg]);
+
   if (error) {
     return (
       <div
@@ -74,8 +92,11 @@ export function Mermaid({ chart, className, id }: MermaidProps) {
   return (
     <div
       ref={containerRef}
-      className={cn("mermaid-container overflow-auto", className)}
-      dangerouslySetInnerHTML={{ __html: svg }}
+      className={cn(
+        "mermaid-container overflow-auto",
+        alignmentClasses[align],
+        className,
+      )}
     />
   );
 }
