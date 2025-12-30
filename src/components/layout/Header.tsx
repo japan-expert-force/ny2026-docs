@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
-import { Button } from "@/components/ui/button";
 import { SparklesText } from "../ui/sparkles-text";
 
 export function Header() {

@@ -11,12 +11,6 @@ interface TimelineItemProps extends React.HTMLAttributes<HTMLDivElement> {
   isLast?: boolean;
 }
 
-const spacingClasses = {
-  sm: "pb-4",
-  md: "pb-8",
-  lg: "pb-12",
-};
-
 const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
   ({ className, spacing = "sm", children, ...props }, ref) => {
     const childrenArray = React.Children.toArray(children);
@@ -46,29 +40,38 @@ const TimelineItem = React.forwardRef<
     { className, title, description, isLast, spacing = "sm", ...props },
     ref,
   ) => {
+    console.log("TimelineItem spacing:", spacing, "isLast:", isLast);
+
+    let spacingClass = "";
+    if (!isLast) {
+      if (spacing === "sm") {
+        spacingClass = "";
+      } else if (spacing === "md") {
+        spacingClass = "pb-4";
+      } else if (spacing === "lg") {
+        spacingClass = "pb-8";
+      }
+    }
+
     return (
       <div
         ref={ref}
-        className={cn(
-          "relative flex items-start gap-4",
-          !isLast && spacingClasses[spacing],
-          className,
-        )}
+        className={cn("relative flex gap-4", className)}
         {...props}
       >
-        {/* Dot and Line */}
-        <div className="relative flex h-[1.5em] w-2 shrink-0 items-center justify-center">
+        {/* Dot and Line Container */}
+        <div className="relative flex w-2 shrink-0 flex-col items-center pt-2">
           <div className="size-2 rounded-full bg-primary" />
-          {!isLast && (
-            <div className="absolute left-1/2 top-[1.5em] h-[calc(100%+1rem)] w-px -translate-x-1/2 bg-border" />
-          )}
+          {!isLast && <div className="mt-2 w-px flex-1 bg-border" />}
         </div>
 
         {/* Content */}
-        <div className="flex-1">
-          <div className="font-semibold leading-[1.5em]">{title}</div>
+        <div className={cn("flex-1 pt-2", spacingClass)}>
+          <div className="font-semibold leading-none">{title}</div>
           {description && (
-            <div className="text-sm text-muted-foreground">{description}</div>
+            <div className="mt-1 text-sm text-muted-foreground">
+              {description}
+            </div>
           )}
         </div>
       </div>
