@@ -35,7 +35,19 @@ const filenameIconMap: Record<string, IconType> = {
   "*.py": SiPython,
 };
 
-const getIcon = (filename: string): IconType | undefined => {
+const languageIconMap: Record<string, IconType> = {
+  javascript: SiJavascript,
+  typescript: SiTypescript,
+  python: SiPython,
+  json: SiJson,
+  markdown: SiMarkdown,
+  mdx: SiMdx,
+  jsx: SiReact,
+  tsx: SiReact,
+  mermaid: Network,
+};
+
+const getIconFromFilename = (filename: string): IconType | undefined => {
   const entry = Object.entries(filenameIconMap).find(([pattern]) => {
     const regex = new RegExp(
       `^${pattern.replace(/\\/g, "\\\\").replace(/\./g, "\\.").replace(/\*/g, ".*")}$`,
@@ -43,6 +55,14 @@ const getIcon = (filename: string): IconType | undefined => {
     return regex.test(filename);
   });
   return entry?.[1];
+};
+
+const getIcon = (
+  language: string | undefined,
+  filename: string,
+): IconType | undefined => {
+  // language が指定されていればそれを優先、なければ filename から判断
+  return language ? languageIconMap[language] : getIconFromFilename(filename);
 };
 
 const highlight = async (
@@ -71,8 +91,11 @@ interface CodeDisplayProps {
 export function CodeDisplay({ filename, code, language }: CodeDisplayProps) {
   const [html, setHtml] = useState<string>("");
   const [isCopied, setIsCopied] = useState(false);
-  const isMermaid = language === "mermaid" || filename.endsWith(".mermaid");
-  const Icon = getIcon(filename);
+  // language が指定されていればそれを優先、なければ filename から判断
+  const isMermaid = language
+    ? language === "mermaid"
+    : filename.endsWith(".mermaid");
+  const Icon = getIcon(language, filename);
 
   useEffect(() => {
     if (!isMermaid) {
