@@ -54,10 +54,13 @@ const TimelineItem = React.forwardRef<
 
   React.Children.forEach(children, (child) => {
     if (React.isValidElement(child)) {
-      if (child.type === TimelineTitle) {
-        titleElement = child.props.children;
-      } else if (child.type === TimelineDescription) {
-        descriptionElement = child.props.children;
+      const element = child as React.ReactElement<{
+        children?: React.ReactNode;
+      }>;
+      if (element.type === TimelineTitle) {
+        titleElement = element.props.children;
+      } else if (element.type === TimelineDescription) {
+        descriptionElement = element.props.children;
       }
     }
   });
