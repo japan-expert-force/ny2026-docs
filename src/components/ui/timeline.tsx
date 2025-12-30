@@ -6,9 +6,8 @@ interface TimelineProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 interface TimelineItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string;
-  description?: string;
   isLast?: boolean;
+  children?: React.ReactNode;
 }
 
 const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
@@ -35,49 +34,66 @@ Timeline.displayName = "Timeline";
 const TimelineItem = React.forwardRef<
   HTMLDivElement,
   TimelineItemProps & { spacing?: "sm" | "md" | "lg" }
->(
-  (
-    { className, title, description, isLast, spacing = "sm", ...props },
-    ref,
-  ) => {
-    console.log("TimelineItem spacing:", spacing, "isLast:", isLast);
+>(({ className, children, isLast, spacing = "sm", ...props }, ref) => {
+  console.log("TimelineItem spacing:", spacing, "isLast:", isLast);
 
-    let spacingClass = "";
-    if (!isLast) {
-      if (spacing === "sm") {
-        spacingClass = "";
-      } else if (spacing === "md") {
-        spacingClass = "pb-4";
-      } else if (spacing === "lg") {
-        spacingClass = "pb-8";
+  let spacingClass = "";
+  if (!isLast) {
+    if (spacing === "sm") {
+      spacingClass = "";
+    } else if (spacing === "md") {
+      spacingClass = "pb-4";
+    } else if (spacing === "lg") {
+      spacingClass = "pb-8";
+    }
+  }
+
+  // Extract title and description from children
+  let titleElement = null;
+  let descriptionElement = null;
+
+  React.Children.forEach(children, (child) => {
+    if (React.isValidElement(child)) {
+      if (child.type === TimelineTitle) {
+        titleElement = child.props.children;
+      } else if (child.type === TimelineDescription) {
+        descriptionElement = child.props.children;
       }
     }
+  });
 
-    return (
-      <div
-        ref={ref}
-        className={cn("relative flex gap-4", className)}
-        {...props}
-      >
-        {/* Dot and Line Container */}
-        <div className="relative flex w-2 shrink-0 flex-col items-center pt-2">
-          <div className="size-2 rounded-full bg-primary" />
-          {!isLast && <div className="mt-2 w-px flex-1 bg-border" />}
-        </div>
-
-        {/* Content */}
-        <div className={cn("flex-1 pt-2", spacingClass)}>
-          <div className="font-semibold leading-none">{title}</div>
-          {description && (
-            <div className="mt-1 text-sm text-muted-foreground">
-              {description}
-            </div>
-          )}
-        </div>
+  return (
+    <div ref={ref} className={cn("relative flex gap-4", className)} {...props}>
+      {/* Dot and Line Container */}
+      <div className="relative flex w-2 shrink-0 flex-col items-center pt-2">
+        <div className="size-2 rounded-full bg-primary" />
+        {!isLast && <div className="mt-2 w-px flex-1 bg-border" />}
       </div>
-    );
-  },
-);
+
+      {/* Content */}
+      <div className={cn("flex-1 pt-2", spacingClass)}>
+        {titleElement && (
+          <div className="font-semibold leading-none">{titleElement}</div>
+        )}
+        {descriptionElement && (
+          <div className="mt-1 text-sm text-muted-foreground">
+            {descriptionElement}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+});
 TimelineItem.displayName = "TimelineItem";
 
-export { Timeline, TimelineItem };
+const TimelineTitle = ({ children }: { children: React.ReactNode }) => {
+  return <>{children}</>;
+};
+TimelineTitle.displayName = "TimelineTitle";
+
+const TimelineDescription = ({ children }: { children: React.ReactNode }) => {
+  return <>{children}</>;
+};
+TimelineDescription.displayName = "TimelineDescription";
+
+export { Timeline, TimelineItem, TimelineTitle, TimelineDescription };

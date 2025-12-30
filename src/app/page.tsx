@@ -3,7 +3,12 @@
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Timeline, TimelineItem } from "@/components/ui/timeline";
+import {
+  Timeline,
+  TimelineDescription,
+  TimelineItem,
+  TimelineTitle,
+} from "@/components/ui/timeline";
 
 const updates = [
   {
@@ -88,11 +93,10 @@ export default function Home() {
         <div className="mt-10">
           <Timeline>
             {updates.flat().map((update, _i) => (
-              <TimelineItem
-                key={update.date}
-                title={update.title}
-                description={`${update.version} ・ ${update.date}`}
-              />
+              <TimelineItem key={update.date}>
+                <TimelineTitle>{update.title}</TimelineTitle>
+                <TimelineDescription>{`${update.version} ・ ${update.date}`}</TimelineDescription>
+              </TimelineItem>
             ))}
           </Timeline>
         </div>

@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SparklesText } from "@/components/ui/sparkles-text";
-import { Timeline, TimelineItem } from "@/components/ui/timeline";
+import {
+  Timeline,
+  TimelineDescription,
+  TimelineItem,
+  TimelineTitle,
+} from "@/components/ui/timeline";
 import { updates } from "@/lib/updates";
 
 export default function DocsPage() {
@@ -25,25 +30,19 @@ export default function DocsPage() {
           <h3 className="text-2xl font-bold">アップデート一覧</h3>
           <Timeline spacing="md">
             {updates.map((update) => (
-              <TimelineItem
-                key={update.id}
-                title={
+              <TimelineItem key={update.id}>
+                <TimelineTitle>
                   <Link
                     href={`/docs/${update.version}`}
                     className="hover:underline hover:text-primary transition-colors"
                   >
-                    {update.date} - {update.title}
+                    {update.version} - {update.title}
                   </Link>
-                }
-                description={
-                  <div className="space-y-1">
-                    <div className="text-xs font-mono">
-                      Java {update.version} / BE {update.version}.x
-                    </div>
-                    <div>{update.description}</div>
-                  </div>
-                }
-              />
+                </TimelineTitle>
+                <TimelineDescription>
+                  <div className="space-y-1">{update.description}</div>
+                </TimelineDescription>
+              </TimelineItem>
             ))}
           </Timeline>
         </div>
