@@ -86,8 +86,8 @@ export default function Home() {
         </div>
 
         <div className="mt-10">
-          <Timeline spacing="sm">
-            {updates.flat().map((update, i) => (
+          <Timeline>
+            {updates.flat().map((update, _i) => (
               <TimelineItem
                 key={update.date}
                 title={update.title}
