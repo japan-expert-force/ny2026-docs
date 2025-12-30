@@ -75,7 +75,7 @@ export default function Home() {
 
   return (
     <ScrollArea className="h-full">
-      <div className="container mx-auto flex flex-col items-center justify-center gap-12 pb-20">
+      <div className="container mx-auto flex flex-col items-center justify-center gap-12">
         <div className="flex flex-col justify-center">
           <h1 className="flex mt-40 text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
             NY2026
