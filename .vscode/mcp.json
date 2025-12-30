@@ -2,30 +2,23 @@
   "servers": {
     "@magicuidesign/mcp": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@magicuidesign/mcp@latest"
-      ]
+      "args": ["-y", "@magicuidesign/mcp@latest"]
     },
     "playwright": {
       "command": "npx",
-      "args": [
-        "@playwright/mcp@latest"
-      ]
+      "args": ["-y", "@playwright/mcp@latest"]
     },
     "next-devtools": {
       "command": "npx",
-      "args": [
-        "-y",
-        "next-devtools-mcp@latest"
-      ]
+      "args": ["-y", "next-devtools-mcp@latest"]
     },
     "shadcn": {
       "command": "npx",
-      "args": [
-        "shadcn@latest",
-        "mcp"
-      ]
+      "args": ["-y", "shadcn@latest", "mcp"]
+    },
+    "minecraft-wiki-mcp": {
+      "command": "npx",
+      "args": ["-y", "github:sharo-jef/minecraft-wiki-mcp"]
     }
   }
 }
