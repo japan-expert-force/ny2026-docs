@@ -71,7 +71,7 @@ const TimelineItem = React.forwardRef<
       </div>
 
       {/* Content */}
-      <div className={cn("flex-1 pt-2", spacingClass)}>
+      <div className={cn("flex-1 pt-1", spacingClass)}>
         {titleElement && (
           <div className="font-semibold leading-none">{titleElement}</div>
         )}
