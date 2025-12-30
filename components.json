@@ -20,6 +20,8 @@
   },
   "registries": {
     "@magicui": "https://magicui.design/r/{name}.json",
-    "@reui": "https://reui.io/r/{name}.json"
+    "@reui": "https://reui.io/r/{name}.json",
+    "@assistant-ui": "https://r.assistant-ui.com/{name}.json",
+    "@shadcnblocks": "https://shadcnblocks.com/r/{name}.json"
   }
 }
