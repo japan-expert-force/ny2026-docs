@@ -91,7 +91,7 @@ const highlight = async (
     ],
   });
 
-  return toJsxRuntime(hast as Element, {
+  return toJsxRuntime(hast, {
     Fragment,
     jsx,
     jsxs,
