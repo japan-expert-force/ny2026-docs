@@ -17,7 +17,7 @@ export function Header() {
               NY2026
             </SparklesText>
           </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm">
+          <nav className="flex items-center gap-6 text-sm">
             <Link
               href="/docs"
               className="transition-colors hover:text-foreground/80 text-foreground/60"
